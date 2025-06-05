@@ -1,0 +1,31 @@
+.interactive-scrollbar {
+  overflow-y: auto;
+}
+
+/* For Webkit browsers (Chrome, Safari, Edge) */
+.interactive-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.interactive-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Make track transparent */
+}
+
+.interactive-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Make thumb transparent by default */
+  border-radius: 4px;
+}
+
+.interactive-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: #a0aec0; /* Tailwind's gray-400 or a theme-appropriate color */
+}
+
+/* For Firefox */
+.interactive-scrollbar {
+  scrollbar-width: thin; /* "thin" or "auto" */
+  scrollbar-color: transparent transparent; /* thumb color track color */
+}
+
+.interactive-scrollbar:hover {
+  scrollbar-color: #a0aec0 transparent; /* thumb color on hover, track transparent */
+}
