@@ -3,13 +3,14 @@ import Hero from '@/Pages/Hero'; // Import the Hero component
 import About from '@/Pages/About'; // Import the About component
 import ExpertisePage from '@/Pages/ExpertisePage'; // Import the ExpertisePage component
 import ContactMe from '@/Pages/ContactMe'; // Import the ContactMe component
+import TimelinePage from '@/Pages/TimelinePage'; // Import the TimelinePage component
 import { ThemeProvider, useTheme } from './components/Hooks/themeHook'; // Assuming ThemeProvider is here
 import NotificationProvider, { useNotification } from './contexts/NotificationContext';
 import HelpModal from './components/HelpModal'; // Import HelpModal
 import { HelpCircle } from 'lucide-react'; // Icon for the help button
 
 // Define available pages
-type PageName = 'hero' | 'about' | 'expertise' | 'contact'; // Added 'contact'
+type PageName = 'hero' | 'about' | 'expertise' | 'contact' | 'timeline'; // Added 'contact' and 'timeline'
 
 // Helper to get page name from hash
 const getPageNameFromHash = (hash: string): PageName => {
@@ -17,6 +18,7 @@ const getPageNameFromHash = (hash: string): PageName => {
     '#about': 'about',
     '#expertise': 'expertise',
     '#contact': 'contact', // Added contact route
+    '#timeline': 'timeline', // Added timeline route
   };
   return routeMap[hash] || 'hero'; // Default to 'hero' if no match
 };
@@ -48,6 +50,10 @@ const App = () => {
   const [shiftAndFirstCPressed, setShiftAndFirstCPressed] = useState(false);
   const contactNavSequenceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // ADDED: Timeline page navigation shortcut state
+  const [shiftAndFirstLPressed, setShiftAndFirstLPressed] = useState(false);
+  const timelineNavSequenceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   // State for Help Modal
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
 
@@ -60,6 +66,7 @@ const App = () => {
     if (currentPage === 'about') newHash = 'about';
     else if (currentPage === 'expertise') newHash = 'expertise';
     else if (currentPage === 'contact') newHash = 'contact'; // Added for contact
+    else if (currentPage === 'timeline') newHash = 'timeline'; // Added for timeline
     // No 'hero' in hash, it's the default if hash is empty or unrecognized
 
     if (window.location.hash.substring(1) !== newHash) {
@@ -162,7 +169,7 @@ const App = () => {
         if (themeSequenceTimeoutRef.current) clearTimeout(themeSequenceTimeoutRef.current);
         themeSequenceTimeoutRef.current = null;
       }
-    } else if (event.shiftKey && event.key.toLowerCase() === 't' && !shiftAndFirstAPressed && !shiftAndFirstHPressed && !shiftAndFirstEPressed && !shiftAndFirstCPressed) {
+    } else if (event.shiftKey && event.key.toLowerCase() === 't' && !shiftAndFirstAPressed && !shiftAndFirstHPressed && !shiftAndFirstEPressed && !shiftAndFirstCPressed && !shiftAndFirstLPressed) {
       event.preventDefault();
       setShiftAndFirstTPressed(true);
       if (themeSequenceTimeoutRef.current) clearTimeout(themeSequenceTimeoutRef.current);
@@ -186,7 +193,7 @@ const App = () => {
         if (aboutNavSequenceTimeoutRef.current) clearTimeout(aboutNavSequenceTimeoutRef.current);
         aboutNavSequenceTimeoutRef.current = null;
       }
-    } else if (event.shiftKey && event.key.toLowerCase() === 'a' && !shiftAndFirstTPressed && !shiftAndFirstHPressed && !shiftAndFirstEPressed && !shiftAndFirstCPressed) {
+    } else if (event.shiftKey && event.key.toLowerCase() === 'a' && !shiftAndFirstTPressed && !shiftAndFirstHPressed && !shiftAndFirstEPressed && !shiftAndFirstCPressed && !shiftAndFirstLPressed) {
       event.preventDefault();
       setShiftAndFirstAPressed(true);
       if (aboutNavSequenceTimeoutRef.current) clearTimeout(aboutNavSequenceTimeoutRef.current);
@@ -210,7 +217,7 @@ const App = () => {
         if (heroNavSequenceTimeoutRef.current) clearTimeout(heroNavSequenceTimeoutRef.current);
         heroNavSequenceTimeoutRef.current = null;
       }
-    } else if (event.shiftKey && event.key.toLowerCase() === 'h' && !shiftAndFirstTPressed && !shiftAndFirstAPressed && !shiftAndFirstEPressed && !shiftAndFirstCPressed) {
+    } else if (event.shiftKey && event.key.toLowerCase() === 'h' && !shiftAndFirstTPressed && !shiftAndFirstAPressed && !shiftAndFirstEPressed && !shiftAndFirstCPressed && !shiftAndFirstLPressed) {
       event.preventDefault();
       setShiftAndFirstHPressed(true);
       if (heroNavSequenceTimeoutRef.current) clearTimeout(heroNavSequenceTimeoutRef.current);
@@ -234,7 +241,7 @@ const App = () => {
         if (expertiseNavSequenceTimeoutRef.current) clearTimeout(expertiseNavSequenceTimeoutRef.current);
         expertiseNavSequenceTimeoutRef.current = null;
       }
-    } else if (event.shiftKey && event.key.toLowerCase() === 'e' && !shiftAndFirstTPressed && !shiftAndFirstAPressed && !shiftAndFirstHPressed && !shiftAndFirstCPressed) {
+    } else if (event.shiftKey && event.key.toLowerCase() === 'e' && !shiftAndFirstTPressed && !shiftAndFirstAPressed && !shiftAndFirstHPressed && !shiftAndFirstCPressed && !shiftAndFirstLPressed) {
       event.preventDefault();
       setShiftAndFirstEPressed(true);
       if (expertiseNavSequenceTimeoutRef.current) clearTimeout(expertiseNavSequenceTimeoutRef.current);
@@ -258,7 +265,7 @@ const App = () => {
         if (contactNavSequenceTimeoutRef.current) clearTimeout(contactNavSequenceTimeoutRef.current);
         contactNavSequenceTimeoutRef.current = null;
       }
-    } else if (event.shiftKey && event.key.toLowerCase() === 'c' && !shiftAndFirstTPressed && !shiftAndFirstAPressed && !shiftAndFirstHPressed && !shiftAndFirstEPressed) {
+    } else if (event.shiftKey && event.key.toLowerCase() === 'c' && !shiftAndFirstTPressed && !shiftAndFirstAPressed && !shiftAndFirstHPressed && !shiftAndFirstEPressed && !shiftAndFirstLPressed) {
       event.preventDefault();
       setShiftAndFirstCPressed(true);
       if (contactNavSequenceTimeoutRef.current) clearTimeout(contactNavSequenceTimeoutRef.current);
@@ -268,7 +275,31 @@ const App = () => {
       }, 750);
     }
 
-  }, [theme, toggleTheme, showNotification, shiftAndFirstTPressed, shiftAndFirstAPressed, shiftAndFirstHPressed, shiftAndFirstEPressed, shiftAndFirstCPressed, isHelpModalOpen, openHelpModal, closeHelpModal]);
+    // ADDED: Navigate to Timeline: Shift + L then L
+    else if (shiftAndFirstLPressed) {
+      if (event.key.toLowerCase() === 'l') {
+        event.preventDefault();
+        setCurrentPage('timeline');
+        showNotification({ message: 'Navigated to Timeline Page.', type: 'info', duration: 2000 });
+        setShiftAndFirstLPressed(false);
+        if (timelineNavSequenceTimeoutRef.current) clearTimeout(timelineNavSequenceTimeoutRef.current);
+        timelineNavSequenceTimeoutRef.current = null;
+      } else {
+        setShiftAndFirstLPressed(false);
+        if (timelineNavSequenceTimeoutRef.current) clearTimeout(timelineNavSequenceTimeoutRef.current);
+        timelineNavSequenceTimeoutRef.current = null;
+      }
+    } else if (event.shiftKey && event.key.toLowerCase() === 'l' && !shiftAndFirstTPressed && !shiftAndFirstAPressed && !shiftAndFirstHPressed && !shiftAndFirstEPressed && !shiftAndFirstCPressed) {
+      event.preventDefault();
+      setShiftAndFirstLPressed(true);
+      if (timelineNavSequenceTimeoutRef.current) clearTimeout(timelineNavSequenceTimeoutRef.current);
+      timelineNavSequenceTimeoutRef.current = setTimeout(() => {
+        setShiftAndFirstLPressed(false);
+        timelineNavSequenceTimeoutRef.current = null;
+      }, 750);
+    }
+
+  }, [theme, toggleTheme, showNotification, shiftAndFirstTPressed, shiftAndFirstAPressed, shiftAndFirstHPressed, shiftAndFirstEPressed, shiftAndFirstCPressed, shiftAndFirstLPressed, isHelpModalOpen, openHelpModal, closeHelpModal]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -279,6 +310,7 @@ const App = () => {
       if (heroNavSequenceTimeoutRef.current) clearTimeout(heroNavSequenceTimeoutRef.current);
       if (expertiseNavSequenceTimeoutRef.current) clearTimeout(expertiseNavSequenceTimeoutRef.current);
       if (contactNavSequenceTimeoutRef.current) clearTimeout(contactNavSequenceTimeoutRef.current); // Added cleanup
+      if (timelineNavSequenceTimeoutRef.current) clearTimeout(timelineNavSequenceTimeoutRef.current); // Added cleanup
     };
   }, [handleKeyDown]);
 
@@ -293,6 +325,8 @@ const App = () => {
         return <ExpertisePage />;
       case 'contact':
         return <ContactMe />;
+      case 'timeline':
+        return <TimelinePage onNavigateBack={() => setCurrentPage('hero')} />;
       default:
         return <Hero onNavigateToContact={() => setCurrentPage('contact')} />;
     }
