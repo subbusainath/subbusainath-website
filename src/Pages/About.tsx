@@ -4,47 +4,62 @@ import { useTheme } from '@/components/Hooks/themeHook';
 const About: React.FC = () => {
     const { theme } = useTheme();
 
-    // Determine placeholder styles based on theme, with fallbacks
-    const placeholderBg = theme.name === 'light' ? 'bg-slate-200' : 'bg-slate-700';
-    const placeholderText = theme.name === 'light' ? 'text-slate-500' : 'text-slate-400';
-    // Determine secondary text color, could be less prominent than primary body text
-    const secondaryTextColor = theme.name === 'light' ? 'text-slate-600' : 'text-slate-300';
-
     return (
-        <div
-            className={`min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 lg:p-16 ${theme.body.background} ${theme.body.text} transition-colors duration-300`}
-        >
-            <div className="container mx-auto max-w-5xl">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
-                    {/* Column 1: Image Placeholder */}
-                    <div className="md:col-span-1 flex justify-center items-center">
-                        <div
-                            className={`w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 rounded-full ${placeholderBg} flex items-center justify-center shadow-xl transition-colors duration-300`}
-                        >
-                            <span className={`${placeholderText} text-lg font-medium transition-colors duration-300`}>
-                                Your Image
+        <div className="min-h-screen flex">
+            {/* Left Panel - Image */}
+            <div className="w-1/2 relative overflow-hidden">
+                <img
+                    src="/src/assets/profilePic/subbu_pic.jpg"
+                    alt="Subbusainath"
+                    className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/50"></div>
+            </div>
+
+            {/* Right Panel - Content */}
+            <div className={`w-1/2 flex items-center justify-center p-12 ${theme.name === 'light' ? 'bg-white' : 'bg-slate-900'}`}>
+                <div className="max-w-lg space-y-8">
+                    <div className="space-y-4">
+                        {/* Badges Section */}
+                        <div className="flex flex-wrap gap-3">
+                            <span className={`${theme.buttons.primary.background} ${theme.buttons.primary.text} px-4 py-2 text-sm text-white font-bold rounded flex items-center justify-center`}>
+                                SENIOR ENGINEER
+                            </span>
+                            <span className={`px-4 py-2 text-sm font-bold rounded border-2 ${theme.name === 'light'
+                                ? 'bg-orange-500 text-white border-orange-600'
+                                : 'bg-orange-400 text-slate-900 border-orange-500'
+                                }`}>
+                                🏗️ AWS COMMUNITY BUILDER
                             </span>
                         </div>
+                        <h1 className={`text-6xl font-black ${theme.body.text} leading-tight`}>
+                            Subbusainath
+                        </h1>
                     </div>
 
-                    {/* Column 2: Details */}
-                    <div className="md:col-span-2 text-center md:text-left">
-                        <h1
-                            className={`text-4xl sm:text-5xl font-bold ${theme.headings.main} mb-6 md:mb-8 transition-colors duration-300`}
-                        >
-                            Your Name {/* Replace with your actual name */}
-                        </h1>
-                        <p
-                            className={`text-base sm:text-lg leading-relaxed ${secondaryTextColor} mb-4 transition-colors duration-300`}
-                        >
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    <div className="space-y-6">
+                        <p className={`text-lg ${theme.body.text} leading-relaxed opacity-80`}>
+                            Cloud Architect building the infrastructure of tomorrow. <br />
+                            From serverless innovation to scalable solutions. <br />
+                            Passionate about cloud-native architectures and serverless technologies, <br />
+                            I am an AWS Community Builder dedicated to sharing knowledge and driving <br />
+                            innovation in the cloud ecosystem.
                         </p>
-                        <p
-                            className={`text-base sm:text-lg leading-relaxed ${secondaryTextColor} transition-colors duration-300`}
-                        >
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        {/* You can add more paragraphs or other elements here */}
+
+                        <div className="space-y-3">
+                            <div className="flex items-center space-x-3">
+                                <div className={`w-2 h-2 rounded-full ${theme.buttons.primary.background}`}></div>
+                                <span className={`text-lg ${theme.body.text} opacity-70`}>
+                                    Cloud Architect
+                                </span>
+                            </div>
+                            <div className="flex items-center space-x-3">
+                                <div className={`w-2 h-2 rounded-full ${theme.buttons.primary.background}`}></div>
+                                <span className={`text-lg ${theme.body.text} opacity-70`}>
+                                    Serverless Architect
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

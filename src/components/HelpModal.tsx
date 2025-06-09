@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Keyboard, Lightbulb, Home, UserCircle, Briefcase, Mail } from 'lucide-react'; // UserCircle for About, Mail for Contact
+import { X, Keyboard, Lightbulb, Home, UserCircle, Briefcase, Mail, Clock } from 'lucide-react'; // UserCircle for About, Mail for Contact, Clock for Timeline
 import { useTheme } from './Hooks/themeHook'; // To style modal according to theme
 
 interface HelpModalProps {
@@ -12,6 +12,7 @@ const shortcuts = [
     { icon: Home, keys: 'Shift + H + H', action: 'Navigate to Home Page' },
     { icon: UserCircle, keys: 'Shift + A + A', action: 'Navigate to About Page' },
     { icon: Briefcase, keys: 'Shift + E + E', action: 'Navigate to Expertise Page' },
+    { icon: Clock, keys: 'Shift + L + L', action: 'Navigate to Timeline Page' },
     { icon: Mail, keys: 'Shift + C + C', action: 'Navigate to Contact Page' },
     { icon: Keyboard, keys: 'Esc', action: 'Close this help dialog' },
 ];

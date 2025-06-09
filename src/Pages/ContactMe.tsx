@@ -180,7 +180,7 @@ const ContactMe: React.FC = () => {
     const placeholderColor = theme.name === 'light' ? 'placeholder-slate-400' : 'placeholder-slate-500';
 
     return (
-        <div className={`min-h-screen ${theme.body.background} ${theme.body.text} transition-colors duration-300`}>
+        <div className={`min-h-screen ${theme.name === 'light' ? 'bg-white' : 'bg-slate-900'} ${theme.body.text} transition-colors duration-300`}>
             <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 lg:py-20">
                 <div className="max-w-6xl mx-auto">
                     {/* Header Section */}

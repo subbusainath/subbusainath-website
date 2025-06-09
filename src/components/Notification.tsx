@@ -33,11 +33,11 @@ const Notification: React.FC<NotificationProps> = ({ message, type, onClose, isV
             aria-live="assertive"
             aria-atomic="true"
             className={`
-        fixed top-5 right-5 z-50 p-4 rounded-md shadow-lg border
+        fixed bottom-5 right-5 z-50 p-4 rounded-md shadow-lg border
         flex items-start max-w-sm
         transition-all duration-300 ease-in-out
         ${bgColorMap[type]}
-        ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}
+        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'}
       `}
         >
             <div className="mr-3 flex-shrink-0">

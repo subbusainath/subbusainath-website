@@ -119,7 +119,7 @@ const VerticalTimeline: React.FC = () => {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [activeFilter]);
+  }, [activeFilter, filteredEvents]);
 
   // Reset visible events when filter changes
   useEffect(() => {
@@ -154,9 +154,9 @@ const VerticalTimeline: React.FC = () => {
         </button>
         
         {Object.entries(categoryConfig).map(([category, config]) => (
-          <button
+        <button
             key={category}
-            onClick={() => setActiveFilter(category as any)}
+            onClick={() => setActiveFilter(category as 'education' | 'work' | 'achievement' | 'project')}
             className={`
               px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
               ${activeFilter === category
