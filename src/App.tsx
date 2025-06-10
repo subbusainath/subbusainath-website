@@ -337,7 +337,7 @@ const App = () => {
       {renderPage()}
       <button
         onClick={openHelpModal}
-        className={`fixed bottom-6 right-6 p-3 rounded-full shadow-lg transition-all duration-200 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 \
+        className={`fixed bottom-6 left-6 p-3 rounded-full shadow-lg transition-all duration-200 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 \
                      ${theme.buttons.primary.background} \
                      ${theme.buttons.primary.text} \
                      ${theme.buttons.primary.hoverBackground} \
